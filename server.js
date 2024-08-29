@@ -4,19 +4,33 @@ const port = 3000;
 const server = http.createServer((req, res) => {
   // writeHead는 한 번만 호출되어야 하며 end()가 호출되기 전에 호출되어야 한다.
   // status와 response headers를 Client에 보낸다.
-  res.writeHead(200, {
-    // "Content-Type": "text/plain",
 
-    // Javascript object를 보내려면?
-    "Content-Type": "application/json",
-  });
-  // 데이터가 로드되었음을 Server에 알림
-  res.end(
-    JSON.stringify({
-      a: "a",
-      b: "b",
-    })
-  );
+  if (req.url === "/home") {
+    res.writeHead(200, {
+      // "Content-Type": "text/plain",
+
+      // Javascript object를 보내려면?
+      "Content-Type": "application/json",
+    });
+    // 데이터가 로드되었음을 Server에 알림
+    res.end(
+      JSON.stringify({
+        a: "a",
+        b: "b",
+      })
+    );
+  } else if (req.url === "/about") {
+    res.setHeader("Content-Type", "text/html");
+    res.write("<html>");
+    res.write("<body>");
+    res.write("<h1>About Page</h1>");
+    res.write("</body>");
+    res.write("</html>");
+    res.end();
+  } else {
+    res.statusCode = 404;
+    res.end();
+  }
 });
 
 // port 수신
