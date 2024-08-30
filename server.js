@@ -15,6 +15,7 @@ const server = http.createServer((req, res) => {
       // Object.assign(target, source) => target에 source를 복사해서 넣는다. source의 기존 값은 변하지 않음.
       Object.assign(dataObject, JSON.parse(stringfiedData));
     });
+    res.end(console.log("POST finish!"));
   } else {
     if (req.url === "/home") {
       res.writeHead(200, {
@@ -24,12 +25,7 @@ const server = http.createServer((req, res) => {
         "Content-Type": "application/json",
       });
       // 데이터가 로드되었음을 Server에 알림
-      res.end(
-        JSON.stringify({
-          a: "a",
-          b: "b",
-        })
-      );
+      res.end(JSON.stringify(dataObject));
     } else if (req.url === "/about") {
       res.setHeader("Content-Type", "text/html");
       res.write("<html>");
